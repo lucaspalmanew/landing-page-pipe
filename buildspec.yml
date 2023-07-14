@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Entrando na fase isntall...
+  pre_build:
+    commands:
+      - echo Entrando na fase pre_build...
+  build:
+    commands:
+      - echo Entrando na fase build...
+      - echo Build started on `date`
+      - echo Efetuando login no ECR...
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 507148034457.dkr.ecr.us-east-1.amazonaws.com
+      - echo Iniciando build no container...
+      - docker build -t landing-page .
+      - docker tag landing-page:latest 507148034457.dkr.ecr.us-east-1.amazonaws.com/landing-page:latest
+      - echo "Enviando imagem para o ECR"
+      - docker push 507148034457.dkr.ecr.us-east-1.amazonaws.com/landing-page:latest
+  post_build:
+    commands:
+      - echo Entrando na fase post_build
+      - echo Build completed on `date`
