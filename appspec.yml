@@ -5,5 +5,5 @@ hooks:
     - location: Scripts/stop_container.sh
       timeout: 180
   ApplicationsStart:
-    - location: Scripts/start_container.sh
+    - location: start_container.sh
       timeout: 3600
